@@ -8,6 +8,7 @@ import {
 import { useBooleanState, useLayoutAnimationOnChange, usePrevious } from "utils/hooks";
 import { getApolloStatuses } from "services/apollo";
 import { NetworkStatus } from "@apollo/client";
+import { UserAccountCreditCard } from "screens/HomeScreen/hooks";
 import { filterAndSortSelectionData } from "../constants";
 import {
   getTransactionsFilterType,
@@ -39,7 +40,7 @@ const getVariables = (
   transactedAfter: getTransactionsTransactedAfter(listItems),
 });
 
-const useTransactionsSearchResults = () => {
+const useTransactionsSearchResults = (activeCard: UserAccountCreditCard | undefined) => {
   // State for the search bar
   const { toggleState: _toggleIsSearchBarVisible, state: isSearchBarVisible } =
     useBooleanState(false);
@@ -167,7 +168,7 @@ const useTransactionsSearchResults = () => {
       error ||
       data?.transactions.__typename === "BaseError" ||
       data?.transactions.__typename === "ValidationError",
-    data: allTransactions ?? [],
+    data: (activeCard && allTransactions) ?? [],
     loading,
     refetch: useCallback(() => refetch(), [refetch]),
     fetchMore: handleFetchMore,

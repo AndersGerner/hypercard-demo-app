@@ -3,6 +3,7 @@ import { Icon, Header3, Touchable } from "components/atoms";
 import { HomeScreen, TransactionDetailScreen } from "screens";
 import { useProfileDrawerStore } from "services/zustand";
 import { getColorValue } from "theme/utils";
+import { AddNewCardScreen } from "screens/AddNewCardScreen";
 import { HomeTabStackNavigatorParamList } from "./types";
 import { DISPUTE_REASON_TITLES } from "./constants";
 
@@ -37,6 +38,13 @@ const HomeTabStackNavigator = () => {
       <Stack.Screen
         name={"TransactionDetailScreen"}
         component={TransactionDetailScreen}
+      />
+      <Stack.Screen
+        name={"AddNewCardScreen"}
+        component={AddNewCardScreen}
+        options={{
+          headerTitle: () => <Header3 color={"$white"}>{"Create new card"}</Header3>,
+        }}
       />
       {/* <Stack.Screen
         name={"DisputeReasonsScreen"}

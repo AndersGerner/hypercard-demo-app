@@ -968,8 +968,8 @@ export type Offer = {
   hypercardMerchant?: Maybe<HypercardMerchant>;
   longDetails?: Maybe<Scalars["String"]>;
   restaurantOffer?: Maybe<RestaurantOffer>;
-  reward: Scalars["String"];
   rewardRuleId: Scalars["Int"];
+  shortRewardDescriptor: Scalars["String"];
   terms?: Maybe<Scalars["String"]>;
   title: Scalars["String"];
 };
@@ -1482,6 +1482,8 @@ export type Transaction = {
   transactedAt: Scalars["DateTime"];
   transactionLocality?: Maybe<TransactionLocality>;
   type: TransactionType;
+  typeCategory?: Maybe<Scalars["String"]>;
+  typeCategoryMetadata?: Maybe<Scalars["String"]>;
 };
 
 export type TransactionItem = PaymentTransaction | Transaction;
@@ -1523,11 +1525,8 @@ export enum TransactionType {
 export type Transactions = {
   __typename?: "Transactions";
   allTransactions: Array<TransactionItem>;
-  count: Scalars["Int"];
   hasMore: Scalars["Boolean"];
   nextPageOffset?: Maybe<Scalars["Int"]>;
-  paymentTransactions: Array<PaymentTransaction>;
-  transactions: Array<Transaction>;
 };
 
 export type TransactionsFilterInput = {

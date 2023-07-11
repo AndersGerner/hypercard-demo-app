@@ -43,6 +43,7 @@ type HomeTabStackNavigatorParamList = {
   };
   DisputeFiledScreen: undefined;
   HelpCenterScreen: undefined;
+  AddNewCardScreen: undefined;
 };
 
 type HomeTabStackNavigatorRouteName = keyof HomeTabStackNavigatorParamList;

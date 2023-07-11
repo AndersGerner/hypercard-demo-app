@@ -7,6 +7,8 @@ import {
   ControlledFormInputProps,
   ControlledFormMultilineInput,
   ControlledFormMultilineInputProps,
+  ControlledSwitchInput,
+  ControlledSwitchInputProps,
 } from "components/molecules/inputs";
 
 type ValidInputValue = string | boolean | number;
@@ -15,9 +17,13 @@ type RequiredSchema = Record<string, ValidInputValue>;
 type InputConfiguration<Schema, Name extends keyof Schema> = (
   | ControlledFormInputProps
   | ControlledFormMultilineInputProps
+  | ControlledSwitchInputProps
 ) & {
   name: Name;
-  component: "ControlledFormInput" | "ControlledFormMultilineInput";
+  component:
+    | "ControlledFormInput"
+    | "ControlledFormMultilineInput"
+    | "ControlledSwitchInput";
 };
 
 type StandardFieldConfigurations<Schema extends RequiredSchema> = {
@@ -45,14 +51,24 @@ const Form = <
     [fieldConfigurations],
   );
 
+  const getComponentToUse = (component: string) => {
+    switch (component) {
+      case "ControlledFormInput":
+        return ControlledFormInput;
+      case "ControlledFormMultilineInput":
+        return ControlledFormMultilineInput;
+      case "ControlledSwitchInput":
+        return ControlledSwitchInput;
+      default:
+        return ControlledFormInput;
+    }
+  };
+
   return (
     <FormProvider {...methods}>
       {inputPropsFromRecord.map(
         ({ component, onFocus, onBlur, ...inputProps }, index, originalArray) => {
-          const ComponentToUse =
-            component === "ControlledFormInput"
-              ? ControlledFormInput
-              : ControlledFormMultilineInput;
+          const ComponentToUse = getComponentToUse(component);
 
           return (
             <React.Fragment key={inputProps.name}>

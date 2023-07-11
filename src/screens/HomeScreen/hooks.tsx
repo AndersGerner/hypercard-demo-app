@@ -112,6 +112,21 @@ const useCardVisibility = (
   };
 };
 
+type UserAccountCreditCard = {
+  currentBalance: string;
+  creditLimit: string;
+  dueDate: string;
+  hasExistingPaymentMethods: boolean;
+  cardArt:
+    | {
+        __typename?: "CardArt" | undefined;
+        backImageUrl: string;
+        frontImageUrl: string;
+      }
+    | undefined;
+  fullName: string;
+};
+
 const useAccountDetailsForHome = () => {
   const {
     data,
@@ -166,17 +181,35 @@ const useAccountDetailsForHome = () => {
     [cardholderData],
   );
 
+  // TODO - Altered for mocking purpose, remove hardcoded 2 cards when query is updated
   return {
     loading,
     error,
     refetch: useCallback(() => refetch(), [refetch]),
-    currentBalance,
-    creditLimit,
-    dueDate,
-    hasExistingPaymentMethods,
-    cardArt: cardArtData,
-    fullName,
+    cards: [
+      {
+        currentBalance,
+        creditLimit,
+        dueDate,
+        hasExistingPaymentMethods,
+        cardArt: cardArtData,
+        fullName: "Card#1",
+      },
+      {
+        currentBalance,
+        creditLimit,
+        dueDate,
+        hasExistingPaymentMethods,
+        cardArt: cardArtData,
+        fullName: "Card#2",
+      },
+    ],
   };
 };
 
-export { useAccountDetailsForHome, useCardVisibility, useDetokenizedPrimaryCardData };
+export {
+  useAccountDetailsForHome,
+  useCardVisibility,
+  useDetokenizedPrimaryCardData,
+  UserAccountCreditCard,
+};

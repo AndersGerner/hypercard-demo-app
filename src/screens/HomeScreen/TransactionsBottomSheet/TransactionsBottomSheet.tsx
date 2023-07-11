@@ -5,6 +5,7 @@ import { Spacer, YStack } from "tamagui";
 import { getSpaceValue } from "theme/utils";
 import { LinearGradient } from "expo-linear-gradient";
 import { DataTagList, DropDownList } from "components/organisms";
+import { UserAccountCreditCard } from "../hooks";
 import { ListHeader } from "./ListHeader";
 import { useTransactionsSearchResults } from "./hooks";
 import { ListItemProps } from "./types";
@@ -22,11 +23,16 @@ const keyExtractor = (item: ListItemProps) => `${item.id}`;
 
 const renderItem = ({ item }: { item: ListItemProps }) => <ListItem {...item} />;
 
-const TransactionsBottomSheet = () => {
+const TransactionsBottomSheet = ({
+  activeCard,
+}: {
+  activeCard: UserAccountCreditCard | undefined;
+}) => {
   const { sheetRef } = useBottomSheetWithControls();
 
   const snapPoints = useSnapPoints();
 
+  // TODO - Add activeCard information to the query
   const {
     // search
     isSearchBarVisible,
@@ -51,7 +57,7 @@ const TransactionsBottomSheet = () => {
     areFiltersVisible,
     filtersAndSorts,
     toggleAreFiltersVisible,
-  } = useTransactionsSearchResults();
+  } = useTransactionsSearchResults(activeCard);
 
   return (
     <BottomSheetWithFlatList
